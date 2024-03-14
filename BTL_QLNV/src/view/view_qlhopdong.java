@@ -21,7 +21,7 @@ import javax.swing.table.TableRowSorter;
 public class view_qlhopdong extends JFrame {
     JTextField txt_mahd, txt_manv, txt_hoten, txt_timkiem;
     JDateChooser ngaybatdau_dc, ngayketthuc_dc;
-    JButton btn_them, btn_sua, btn_xoa, btn_xuatexc, btn_luu, btn_thoat;
+    JButton btn_them, btn_sua, btn_xoa, btn_xuatexc, btn_capnhat, btn_themmoi, btn_thoat;
     public JTable tb_hopdong;
     JPanel panel_north, panel_center, panel_south, panel_center1, panel_center2, panel_center3, panel_center31, panel_center32;
     private controller_qlhopdong controller_qlhd;
@@ -82,10 +82,12 @@ public class view_qlhopdong extends JFrame {
         
         // Panel South
         panel_south = new JPanel();
-        btn_luu = new JButton("Lưu");
+        btn_themmoi = new JButton("Thêm mới");
+        btn_capnhat = new JButton("Cập nhật");
         btn_thoat = new JButton("Thoát");
-        panel_south.add(btn_luu);
-        panel_south.add(btn_thoat);
+        panel_south.add(btn_themmoi);
+        panel_south.add(btn_capnhat);
+        panel_south.add(btn_thoat);        
 
         // Khởi tạo các JButton
         btn_them = new JButton("Thêm");
@@ -140,12 +142,10 @@ public class view_qlhopdong extends JFrame {
         
         
         btn_sua.setEnabled(false);
-        btn_xoa.setEnabled(false);
-        txt_mahd.setEnabled(false);
-        txt_manv.setEnabled(false);
-        txt_hoten.setEnabled(false);
-        ngaybatdau_dc.setEnabled(false);
-        ngayketthuc_dc.setEnabled(false);
+        btn_xoa.setEnabled(false);        
+        btn_themmoi.setEnabled(false);
+        btn_capnhat.setEnabled(false);
+        setLock();
         
         // Thêm panel_center1 và panel_center2 vào panel_center
         panel_center.add(panel_center1, BorderLayout.NORTH);
@@ -163,29 +163,20 @@ public class view_qlhopdong extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 controller_qlhd.XoaButtonClick();
                 btn_sua.setEnabled(false);
+                btn_themmoi.setEnabled(true);
+                btn_capnhat.setEnabled(false);
                 btn_xoa.setEnabled(false);
-                txt_mahd.setText(null);
-                txt_manv.setText(null);
-                txt_hoten.setText(null);
-                ngaybatdau_dc.setDate(null);
-                ngayketthuc_dc.setDate(null);
-                txt_mahd.setEnabled(true);
-                txt_manv.setEnabled(true);
-                txt_hoten.setEnabled(true);
-                ngaybatdau_dc.setEnabled(true);
-                ngayketthuc_dc.setEnabled(true);
+                setNull();
+                setOpen();
             }
         });
         
         btn_sua.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller_qlhd.SuaButtonClick();
-                txt_mahd.setEnabled(true);
-                txt_manv.setEnabled(true);
-                txt_hoten.setEnabled(true);
-                ngaybatdau_dc.setEnabled(true);
-                ngayketthuc_dc.setEnabled(true);
+                btn_themmoi.setEnabled(false);
+                btn_capnhat.setEnabled(true);
+                setOpen();
             }
         });
         
@@ -203,10 +194,17 @@ public class view_qlhopdong extends JFrame {
             }
         });
         
-        btn_luu.addActionListener(new ActionListener() {
+        btn_themmoi.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller_qlhd.LuuButtonClick();
+                controller_qlhd.ThemmoiButtonClick();
+            }
+        });
+        
+        btn_capnhat.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller_qlhd.CapnhatButtonClick();
             }
         });
         
@@ -243,6 +241,28 @@ public class view_qlhopdong extends JFrame {
         });
             view_Screen();
         }
+    public void setOpen(){
+        txt_mahd.setEnabled(true);
+        txt_manv.setEnabled(true);
+        txt_hoten.setEnabled(true);
+        ngaybatdau_dc.setEnabled(true);
+        ngayketthuc_dc.setEnabled(true);
+    }
+    public void setLock(){
+        txt_mahd.setEnabled(false);
+        txt_manv.setEnabled(false);
+        txt_hoten.setEnabled(false);
+        ngaybatdau_dc.setEnabled(false);
+        ngayketthuc_dc.setEnabled(false);
+    }
+    
+    public void setNull(){        
+        txt_mahd.setText(null);
+        txt_manv.setText(null);
+        txt_hoten.setText(null);
+        ngaybatdau_dc.setDate(null);
+        ngayketthuc_dc.setDate(null);
+    }
     public JTextField get_txtmahd(){
         return txt_mahd;
     }
@@ -267,8 +287,11 @@ public class view_qlhopdong extends JFrame {
     public JButton get_xoa(){
         return btn_xoa;
     }
-    public JButton get_luu(){
-        return btn_luu;
+    public JButton get_themmoi(){
+        return btn_themmoi;
+    }
+    public JButton get_capnhat(){
+        return btn_capnhat;
     }
     public JButton get_thoat(){
         return btn_thoat;

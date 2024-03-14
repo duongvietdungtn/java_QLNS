@@ -8,8 +8,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -28,14 +30,7 @@ public class controller_qlhopdong {
         connection = KetNoi.getConnection(); // Lấy kết nối từ lớp KetNoi
         view_qlhd.setVisible(true);
         loadDataToTable();
-    }
-    public void ThemButtonClick(){
-        
-    }
-    public void SuaButtonClick(){
-        
-    }
-    
+    }    
     public void XoaButtonClick(){
         
     }
@@ -44,8 +39,47 @@ public class controller_qlhopdong {
         
     }
     
-    public void LuuButtonClick(){
-        
+    public void ThemmoiButtonClick(){
+        // Lấy nội dung của txt_mahd và txt_manv
+        String mahd = view_qlhd.get_txtmahd().getText();
+        String manv = view_qlhd.get_txtmanv().getText();
+        String hoten = view_qlhd.get_txthoten().getText();
+        Date ngaybatdau = view_qlhd.get_ngaybatdau().getDate();
+        Date ngayketthuc = view_qlhd.get_ngayketthuc().getDate();
+
+        // Kiểm tra nếu mahd hoặc manv rỗng thì hiển thị thông báo lỗi
+        if (mahd.isEmpty() || manv.isEmpty() || hoten.isEmpty() || ngaybatdau == null || ngayketthuc == null) {
+            JOptionPane.showMessageDialog(null, "Vui lòng kiểm tra lại và điền đầy đủ thông tin!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }else if(ngaybatdau.compareTo(ngayketthuc) >= 0){
+            JOptionPane.showMessageDialog(null, "Vui lòng kiểm tra lại, ngày bắt đầu phải trước ngày kết thúc!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }else {          
+            view_qlhd.get_themmoi().setEnabled(false);
+            view_qlhd.setLock();
+            view_qlhd.setNull();
+        }
+    }
+    
+    public void CapnhatButtonClick(){
+         // Lấy nội dung của txt_mahd và txt_manv
+        String mahd = view_qlhd.get_txtmahd().getText();
+        String manv = view_qlhd.get_txtmanv().getText();
+        String hoten = view_qlhd.get_txthoten().getText();
+        Date ngaybatdau = view_qlhd.get_ngaybatdau().getDate();
+        Date ngayketthuc = view_qlhd.get_ngayketthuc().getDate();
+
+        // Kiểm tra nếu mahd hoặc manv rỗng thì hiển thị thông báo lỗi
+        if (mahd.isEmpty() || manv.isEmpty() || hoten.isEmpty() || ngaybatdau == null || ngayketthuc == null) {
+            JOptionPane.showMessageDialog(null, "Vui lòng kiểm tra lại và điền đầy đủ thông tin!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }else if(ngaybatdau.compareTo(ngayketthuc) > 0){
+            JOptionPane.showMessageDialog(null, "Vui lòng kiểm tra lại, ngày kết thúc phải sau ngày bắt đầu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }else {
+            int option = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn cập nhật thông tin?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+            if (option == JOptionPane.YES_OPTION) {
+                view_qlhd.get_capnhat().setEnabled(false);
+                view_qlhd.get_sua().setEnabled(false);             
+                view_qlhd.setLock();
+            }
+        }
     }
     
     public void ThoatButtonClick(){
@@ -60,11 +94,7 @@ public class controller_qlhopdong {
         }  
     
     public void ClickTable(){
-        view_qlhd.get_txtmahd().setEnabled(false);
-        view_qlhd.get_txtmanv().setEnabled(false);
-        view_qlhd.get_txthoten().setEnabled(false);
-        view_qlhd.get_ngaybatdau().setEnabled(false);
-        view_qlhd.get_ngayketthuc().setEnabled(false);
+       view_qlhd.setLock();
        int selectedRow = view_qlhd.tb_hopdong.getSelectedRow();
        if (selectedRow != -1) { // Kiểm tra xem có hàng được chọn không
            // Lấy mã nhân viên từ hàng được chọn
