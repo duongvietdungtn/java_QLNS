@@ -4,14 +4,15 @@
  */
 package controller;
 
-import view.view_ttnhanvien;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import view.view_ttnhanvien;
 
 /**
@@ -49,6 +50,13 @@ public class controller_ttnhanvien {
     public void ThoatButtonClick(){
         view_ttnv.dispose();
     }
+    
+    public void filter() {
+            String query = view_ttnv.get_txttimkiem().getText().toLowerCase();
+            TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>((DefaultTableModel) view_ttnv.tb_thongtin.getModel());
+            view_ttnv.tb_thongtin.setRowSorter(sorter);
+            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + query));
+        }    
     
     public void LoadDataGtinhToCbb(){
     }

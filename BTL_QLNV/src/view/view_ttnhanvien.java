@@ -13,13 +13,16 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
 import javax.swing.*;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 public class view_ttnhanvien extends JFrame {
     JTextField txt_manv, txt_hoten, txt_diachi, txt_mabaohiem, txt_cccd, txt_path, txt_sdt, txt_timkiem;
     JComboBox cbb_giotinh, cbb_bophan, cbb_chucvu;
     JDateChooser ngaysinh_dc;
-    JButton btn_sua, btn_xoa, btn_timkiem, btn_xuatexc, btn_luu, btn_thoat;
+    JButton btn_sua, btn_xoa, btn_xuatexc, btn_luu, btn_thoat;
     public JTable tb_thongtin;
     JPanel panel_north, panel_center, panel_south, panel_center1, panel_center2, panel_center3, panel_center31, panel_center32;
     private controller_ttnhanvien controller_ttnv;
@@ -46,9 +49,8 @@ public class view_ttnhanvien extends JFrame {
         // Panel North
         panel_north = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         txt_timkiem = new JTextField(20);
-        btn_timkiem = new JButton("Tìm kiếm");
+        panel_north.add(new JLabel("Tìm kiếm: "));
         panel_north.add(txt_timkiem);
-        panel_north.add(btn_timkiem);
 
         panel_center = new JPanel();
         panel_center.setLayout(new BorderLayout());
@@ -89,7 +91,6 @@ public class view_ttnhanvien extends JFrame {
         // Khởi tạo các JButton
         btn_sua = new JButton("Sửa");
         btn_xoa = new JButton("Xóa");
-        btn_timkiem = new JButton("Tìm kiếm");
         btn_xuatexc = new JButton("Xuất Excel");
         
         
@@ -250,9 +251,25 @@ public class view_ttnhanvien extends JFrame {
             }
         });
         
-        view_Screen();
-    }
-    
+        txt_timkiem.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                controller_ttnv.filter();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                controller_ttnv.filter();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                controller_ttnv.filter();
+            }
+        });
+            view_Screen();
+        }
+
     public JTextField get_txtmanv(){
         return txt_manv;
     }
@@ -273,6 +290,10 @@ public class view_ttnhanvien extends JFrame {
     }
     public JTextField get_txtmabaohiem(){
         return txt_mabaohiem;
+    }
+    
+    public JTextField get_txttimkiem(){
+        return txt_timkiem;
     }
     public JComboBox<String> get_cbbbophan(){
         return cbb_bophan;
