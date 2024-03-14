@@ -29,6 +29,9 @@ public class controller_qlhopdong {
         view_qlhd.setVisible(true);
         loadDataToTable();
     }
+    public void ThemButtonClick(){
+        
+    }
     public void SuaButtonClick(){
         
     }
@@ -57,6 +60,11 @@ public class controller_qlhopdong {
         }  
     
     public void ClickTable(){
+        view_qlhd.get_txtmahd().setEnabled(false);
+        view_qlhd.get_txtmanv().setEnabled(false);
+        view_qlhd.get_txthoten().setEnabled(false);
+        view_qlhd.get_ngaybatdau().setEnabled(false);
+        view_qlhd.get_ngayketthuc().setEnabled(false);
        int selectedRow = view_qlhd.tb_hopdong.getSelectedRow();
        if (selectedRow != -1) { // Kiểm tra xem có hàng được chọn không
            // Lấy mã nhân viên từ hàng được chọn

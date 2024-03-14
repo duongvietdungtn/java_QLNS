@@ -169,6 +169,11 @@ public class view_qlhopdong extends JFrame {
                 txt_hoten.setText(null);
                 ngaybatdau_dc.setDate(null);
                 ngayketthuc_dc.setDate(null);
+                txt_mahd.setEnabled(true);
+                txt_manv.setEnabled(true);
+                txt_hoten.setEnabled(true);
+                ngaybatdau_dc.setEnabled(true);
+                ngayketthuc_dc.setEnabled(true);
             }
         });
         
