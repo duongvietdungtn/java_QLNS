@@ -10,7 +10,7 @@ import java.util.Date;
  * @author Dugdug
  */
 public class model_ttnhanvien {
-    private String manv, hoten, diachi, mahopdong, phongban, mabaohiem, gioitinh, path;
+    private String manv, hoten, diachi, mahd, phongban, mabaohiem, gioitinh, path;
     private int cccd, sdt;
     private Date ngaysinh;
     
@@ -18,13 +18,13 @@ public class model_ttnhanvien {
         
     }
     
-    public model_ttnhanvien(int cccd, int sdt, String manv, String hoten, String diachi, String mahopdong, String phongban, String mabaohiem, String gioitinh, String path){
+    public model_ttnhanvien(int cccd, int sdt, String manv, String hoten, String diachi, String mahd, String phongban, String mabaohiem, String gioitinh, String path){
         this.cccd = cccd;
         this.manv = manv;
         this.hoten = hoten;
         this.diachi = diachi;
         this.sdt = sdt;
-        this.mahopdong = mahopdong;
+        this.mahd = mahd;
         this.phongban = phongban;
         this.mabaohiem = mabaohiem;
         this.gioitinh = gioitinh;
@@ -69,11 +69,11 @@ public class model_ttnhanvien {
     }
 
     // Getter và setter cho mahopdong
-    public String getMahopdong() {
-        return mahopdong;
+    public String getMahd() {
+        return mahd;
     }
-    public void setMahopdong(String mahopdong) {
-        this.mahopdong = mahopdong;
+    public void setMahd(String mahd) {
+        this.mahd = mahd;
     }
 
     // Getter và setter cho phongban

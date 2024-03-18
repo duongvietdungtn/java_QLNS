@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 public class view_ttnhanvien extends JFrame {
-    JTextField txt_manv, txt_hoten, txt_diachi, txt_mabaohiem, txt_cccd, txt_path, txt_sdt, txt_timkiem;
+    JTextField txt_manv, txt_hoten, txt_diachi, txt_mabaohiem, txt_cccd, txt_mahd, txt_path, txt_sdt, txt_timkiem;
     JComboBox cbb_giotinh, cbb_bophan, cbb_chucvu;
     JDateChooser ngaysinh_dc;
     JButton btn_sua, btn_xoa, btn_xuatexc, btn_luu, btn_thoat;
@@ -34,7 +34,7 @@ public class view_ttnhanvien extends JFrame {
 
     public void view_Screen() {
         setTitle("Thông tin nhân viên");
-        setSize(1200, 700);
+        setSize(1500, 700);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
@@ -90,13 +90,13 @@ public class view_ttnhanvien extends JFrame {
 
         // Khởi tạo các JButton
         btn_sua = new JButton("Sửa");
-        btn_xoa = new JButton("Xóa");
+//        btn_xoa = new JButton("Xóa");
         btn_xuatexc = new JButton("Xuất Excel");
         
         
         // Thêm các thành phần của bạn vào panel_center1
         panel_center1.add(btn_sua);
-        panel_center1.add(btn_xoa);
+//        panel_center1.add(btn_xoa);
         panel_center1.add(btn_xuatexc);
         
         // Chỉnh layout của panel_center1 để căn chỉnh về phía trái
@@ -168,26 +168,22 @@ public class view_ttnhanvien extends JFrame {
         panel_center3.add(txt_sdt = new JTextField(20), gbc);
         gbc.gridx = 0;
         gbc.gridy = 5;
-        panel_center3.add(new JLabel("Path"), gbc);
+        panel_center3.add(new JLabel("Mã hợp đồng"), gbc);
         gbc.gridx = 1;
         gbc.gridy = 5;
-        gbc.gridwidth = 3;
-        panel_center3.add(txt_path = new JTextField(20), gbc);   
-        
+        panel_center3.add(txt_mahd = new JTextField(20), gbc);  
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        panel_center3.add(new JLabel("Path"), gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 6;
+        gbc.gridwidth = 3; 
+        panel_center3.add(txt_path = new JTextField(20), gbc);  
         
         btn_sua.setEnabled(false);
-        btn_xoa.setEnabled(false);
-        txt_manv.setEnabled(false);
-        txt_hoten.setEnabled(false);
-        txt_diachi.setEnabled(false);
-        txt_mabaohiem.setEnabled(false);
-        txt_cccd.setEnabled(false);
-        txt_sdt.setEnabled(false);
-        txt_path.setEnabled(false);
-        cbb_giotinh.setEnabled(false);
-        cbb_bophan.setEnabled(false);
-        cbb_chucvu.setEnabled(false);
-        ngaysinh_dc.setEnabled(false);
+//        btn_xoa.setEnabled(false);
+        btn_luu.setEnabled(false);
+        setLock();
         
         // Thêm panel_center1 và panel_center2 vào panel_center
         panel_center.add(panel_center1, BorderLayout.NORTH);
@@ -215,12 +211,12 @@ public class view_ttnhanvien extends JFrame {
             }
         });
         
-        btn_xoa.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                controller_ttnv.XoaButtonClick();
-            }
-        });
+//        btn_xoa.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                controller_ttnv.XoaButtonClick();
+//            }
+//        });
         
         btn_xuatexc.addActionListener(new ActionListener() {
             @Override
@@ -269,6 +265,20 @@ public class view_ttnhanvien extends JFrame {
         });
             view_Screen();
         }
+    public void setLock(){
+        txt_manv.setEnabled(false);
+        txt_hoten.setEnabled(false);
+        txt_diachi.setEnabled(false);
+        txt_mabaohiem.setEnabled(false);
+        txt_cccd.setEnabled(false);
+        txt_sdt.setEnabled(false);
+        txt_mahd.setEnabled(false);
+        txt_path.setEnabled(false);
+        cbb_giotinh.setEnabled(false);
+        cbb_bophan.setEnabled(false);
+        cbb_chucvu.setEnabled(false);
+        ngaysinh_dc.setEnabled(false);
+    }
 
     public JTextField get_txtmanv(){
         return txt_manv;
@@ -291,6 +301,9 @@ public class view_ttnhanvien extends JFrame {
     public JTextField get_txtmabaohiem(){
         return txt_mabaohiem;
     }
+    public JTextField get_txtmahd(){
+        return txt_mahd;
+    }
     
     public JTextField get_txttimkiem(){
         return txt_timkiem;
@@ -311,9 +324,9 @@ public class view_ttnhanvien extends JFrame {
     public JButton get_sua(){
         return btn_sua;
     }
-    public JButton get_xoa(){
-        return btn_xoa;
-    }
+//    public JButton get_xoa(){
+//        return btn_xoa;
+//    }
     public JButton get_luu(){
         return btn_luu;
     }
