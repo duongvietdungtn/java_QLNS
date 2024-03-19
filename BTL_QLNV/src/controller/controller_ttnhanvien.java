@@ -108,7 +108,7 @@ public class controller_ttnhanvien {
     
     public void LoadDataBphanToCbb(){
         try {
-            String query = "SELECT bophan FROM bophan";
+            String query = "SELECT bophan FROM thongtinnhanvien";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -122,7 +122,7 @@ public class controller_ttnhanvien {
     
     public void LoadDataCvuToCbb(){
         try {
-            String query = "SELECT chucvu FROM chucvu";
+            String query = "SELECT chucvu FROM thongtinnhanvien";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -152,8 +152,8 @@ public class controller_ttnhanvien {
                    view_ttnv.get_txtmanv().setText(resultSet.getString("manv"));
                    view_ttnv.get_txthoten().setText(resultSet.getString("hoten"));
                    view_ttnv.get_cbbgioitinh().setSelectedItem(resultSet.getString("gioitinh"));
-//                   view_ttnv.get_cbbbophan().addItem(resultSet.getString("bophan"));
-//                   view_ttnv.get_cbbchucvu().addItem(resultSet.getString("chucvu"));
+                   view_ttnv.get_cbbbophan().setSelectedItem(resultSet.getString("bophan"));
+                   view_ttnv.get_cbbchucvu().setSelectedItem(resultSet.getString("chucvu"));
                    view_ttnv.get_txtcccd().setText(resultSet.getString("cccd"));
                    view_ttnv.get_ngaysinh().setDate(resultSet.getDate("ngaysinh"));
                    view_ttnv.get_txtdiachi().setText(resultSet.getString("diachi"));

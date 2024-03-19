@@ -34,7 +34,7 @@ public class view_ttnhanvien extends JFrame {
 
     public void view_Screen() {
         setTitle("Thông tin nhân viên");
-        setSize(1500, 700);
+        setSize(1300, 700);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
