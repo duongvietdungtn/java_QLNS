@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package controller;
+package Controller;
 
 import java.awt.Desktop;
 import java.awt.Image;
@@ -31,7 +31,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import javax.swing.table.TableRowSorter;
 import org.apache.poi.xssf.usermodel.XSSFCell;
-import view.view_ttnhanvien;
+import View.view_ttnhanvien;
 
 /**
  *
@@ -286,5 +286,8 @@ public class controller_ttnhanvien {
         } catch (SQLException ex) {
             Logger.getLogger(controller_ttnhanvien.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    public static void main(String[] args) {
+        controller_ttnhanvien ttnv = new controller_ttnhanvien();
     }
 }
