@@ -35,7 +35,7 @@ public class view_ttnhanvien extends JFrame {
 
     public void view_Screen() {
         setTitle("Thông tin nhân viên");
-        setSize(1300, 700);
+        setSize(1250, 650);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
@@ -82,18 +82,24 @@ public class view_ttnhanvien extends JFrame {
         gbcTable.weighty = 1.0;
         panel_center2.add(scrollPane, gbcTable); // Sử dụng JScrollPane để có thể cuộn khi có nhiều dòng
         
+        ImageIcon icon_luu =  new ImageIcon("C:\\Users\\hieup\\Downloads\\BTL\\src\\main\\java\\Image\\save.png");
+        ImageIcon icon_thoat =  new ImageIcon("C:\\Users\\hieup\\Downloads\\BTL\\src\\main\\java\\Image\\exit.png");
+        ImageIcon icon_sua =  new ImageIcon("C:\\Users\\hieup\\Downloads\\BTL\\src\\main\\java\\Image\\edit.png");
+        ImageIcon icon_excel =  new ImageIcon("C:\\Users\\hieup\\Downloads\\BTL\\src\\main\\java\\Image\\excel.png");
+        ImageIcon icon_browse =  new ImageIcon("C:\\Users\\hieup\\Downloads\\BTL\\src\\main\\java\\Image\\browse.png");
+        
         // Panel South
         panel_south = new JPanel();
-        btn_luu = new JButton("Lưu");
-        btn_thoat = new JButton("Thoát");
+        btn_luu = new JButton("Lưu", icon_luu);
+        btn_thoat = new JButton("Thoát", icon_thoat);
         panel_south.add(btn_luu);
         panel_south.add(btn_thoat);
-        btn_upload = new JButton("Chọn ảnh");
+        btn_upload = new JButton("Chọn ảnh", icon_browse);
 
         // Khởi tạo các JButton
-        btn_sua = new JButton("Sửa");
+        btn_sua = new JButton("Sửa", icon_sua);
 //        btn_xoa = new JButton("Xóa");
-        btn_xuatexc = new JButton("Xuất Excel");
+        btn_xuatexc = new JButton("Xuất Excel", icon_excel);
         
         
         // Thêm các thành phần của bạn vào panel_center1
@@ -183,11 +189,11 @@ public class view_ttnhanvien extends JFrame {
         gbc.gridx = 6;
         gbc.gridy = 0;
         gbc.gridheight = 5;        
-        gbc.insets = new Insets (10,50,8,10);
+        gbc.insets = new Insets (10,50,2,10);
         panel_center3.add(jLabelImage = new JLabel(), gbc);
         gbc.gridx = 6;
         gbc.gridy = 5;
-        gbc.insets = new Insets (10,50,8,10);
+        gbc.insets = new Insets (2,50,8,10);
         panel_center3.add(btn_upload, gbc);
         
         btn_sua.setEnabled(false);
@@ -208,11 +214,11 @@ public class view_ttnhanvien extends JFrame {
                 txt_diachi.setEnabled(true);
                 txt_cccd.setEnabled(true);
                 txt_sdt.setEnabled(true);
-                txt_path.setEnabled(true);
                 cbb_giotinh.setEnabled(true);
                 cbb_bophan.setEnabled(true);
                 cbb_chucvu.setEnabled(true);
-                ngaysinh_dc.setEnabled(true);
+                ngaysinh_dc.setEnabled(true);     
+                btn_upload.setEnabled(true);           
             }
         });
         
@@ -259,24 +265,17 @@ public class view_ttnhanvien extends JFrame {
             }
         });
         
-        txt_timkiem.getDocument().addDocumentListener(new DocumentListener() {
+        txt_timkiem.addActionListener(new ActionListener() {
             @Override
-            public void insertUpdate(DocumentEvent e) {
-                controller_ttnv.filter();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                controller_ttnv.filter();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                controller_ttnv.filter();
+            public void actionPerformed(ActionEvent e) {
+                controller_ttnv.timkiem();
             }
         });
-            view_Screen();
-        }
+//        btn_thoat.setIcon(new ImageIcon("T:\\Code\\java_QLNS\\BTL\\src\\main\\java\\back.png"));
+//        btn_sua.setIcon(new ImageIcon("T:\\Code\\java_QLNS\\BTL\\src\\main\\java\\edit.png"));
+//        btn_xuatexc.setIcon(new ImageIcon("T:\\Code\\java_QLNS\\BTL\\src\\main\\java\\excel.png"));
+        view_Screen();
+    }
     public void setLock(){
         txt_manv.setEnabled(false);
         txt_hoten.setEnabled(false);
@@ -290,6 +289,7 @@ public class view_ttnhanvien extends JFrame {
         cbb_bophan.setEnabled(false);
         cbb_chucvu.setEnabled(false);
         ngaysinh_dc.setEnabled(false);
+        btn_upload.setEnabled(false);
     }
 
     public JTextField get_txtmanv(){
@@ -305,7 +305,7 @@ public class view_ttnhanvien extends JFrame {
         return txt_cccd;
     }
     public JTextField get_txtsdt(){
-        return txt_sdt;
+        return txt_sdt;     
     }
     public JTextField get_txtpath(){
         return txt_path;
@@ -336,15 +336,16 @@ public class view_ttnhanvien extends JFrame {
         return cbb_giotinh;
     }
     
+    public JTable getTable() {
+        return tb_thongtin;
+    }
+    
     public JDateChooser get_ngaysinh() {
         return ngaysinh_dc;
     }
     public JButton get_sua(){
         return btn_sua;
     }
-//    public JButton get_xoa(){
-//        return btn_xoa;
-//    }
     public JButton get_luu(){
         return btn_luu;
     }

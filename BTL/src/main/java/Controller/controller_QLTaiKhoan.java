@@ -28,7 +28,7 @@ public class controller_QLTaiKhoan {
 
     public controller_QLTaiKhoan() {
         view = new view_QLTaiKhoan(this);
-        connection = KetNoi.getConnection(); // Lấy kết nối từ lớp KetNoi
+        connection = KetNoi.getConnection();
         view.setVisible(true);
         loadDataToTable();
     }
@@ -38,7 +38,6 @@ public class controller_QLTaiKhoan {
         view.dispose();
     }
 
-    
     public void handleAddButtonClick() {
         try {
             int id = Integer.parseInt(view.getId_text().getText());

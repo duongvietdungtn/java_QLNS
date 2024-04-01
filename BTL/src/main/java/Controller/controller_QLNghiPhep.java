@@ -256,7 +256,7 @@ public class controller_QLNghiPhep {
         ResultSet resultSet = preparedStatement.executeQuery();
 
         return resultSet.next();
-    }
+    }   
 
     private boolean isDuplicate(String manv, String ngaynghi, String excludeManp) throws SQLException {
         String query = "SELECT * FROM qlnghiphep WHERE manv=? AND ngaynghi=? AND manp<>?";

@@ -10,109 +10,121 @@ import java.util.Date;
  * @author Dugdug
  */
 public class model_ttnhanvien {
-    private String manv, hoten, diachi, mahd, phongban, mabaohiem, gioitinh, path;
-    private int cccd, sdt;
+    private String manv, hoten, diachi, mahd, bophan, mabaohiem, gioitinh, path, chucvu, sdt;
+    private long cccd;
     private Date ngaysinh;
-    
-    public model_ttnhanvien(){
-        
-    }
-    
-    public model_ttnhanvien(int cccd, int sdt, String manv, String hoten, String diachi, String mahd, String phongban, String mabaohiem, String gioitinh, String path){
-        this.cccd = cccd;
+
+    public model_ttnhanvien(String manv, String hoten, String diachi, String mahd, String bophan, String mabaohiem, String gioitinh, String path, String chucvu, String sdt, long cccd, Date ngaysinh) {
         this.manv = manv;
         this.hoten = hoten;
         this.diachi = diachi;
-        this.sdt = sdt;
         this.mahd = mahd;
-        this.phongban = phongban;
+        this.bophan = bophan;
         this.mabaohiem = mabaohiem;
         this.gioitinh = gioitinh;
-        this.ngaysinh = ngaysinh;
         this.path = path;
+        this.chucvu = chucvu;
+        this.sdt = sdt;
+        this.cccd = cccd;
+        this.ngaysinh = ngaysinh;
     }
 
-    public int getSdt() {
-        return sdt;
-    }
-    public void setSdt(int sdt) {
-        this.sdt = sdt;
-    }
-    
-    public int getCCCD(){
-        return cccd;
-    }
-    public void setCCCD(){
-        this.cccd = cccd;
-    }
-    
-    public String getManv(){
+    public String getManv() {
         return manv;
     }
-    public void setManv(String manv){
+
+    public void setManv(String manv) {
         this.manv = manv;
     }
 
     public String getHoten() {
         return hoten;
     }
+
     public void setHoten(String hoten) {
         this.hoten = hoten;
     }
 
-    // Getter và setter cho diachi
     public String getDiachi() {
         return diachi;
     }
+
     public void setDiachi(String diachi) {
         this.diachi = diachi;
     }
 
-    // Getter và setter cho mahopdong
     public String getMahd() {
         return mahd;
     }
+
     public void setMahd(String mahd) {
         this.mahd = mahd;
     }
 
-    // Getter và setter cho phongban
-    public String getPhongban() {
-        return phongban;
-    }
-    public void setPhongban(String phongban) {
-        this.phongban = phongban;
+    public String getBophan() {
+        return bophan;
     }
 
-    // Getter và setter cho mabaohiem
+    public void setBophan(String bophan) {
+        this.bophan = bophan;
+    }
+
     public String getMabaohiem() {
         return mabaohiem;
     }
+
     public void setMabaohiem(String mabaohiem) {
         this.mabaohiem = mabaohiem;
     }
 
-    // Getter và setter cho gioitinh
     public String getGioitinh() {
         return gioitinh;
     }
+
     public void setGioitinh(String gioitinh) {
         this.gioitinh = gioitinh;
     }
 
-    // Getter và setter cho ngaysinh
-    public Date getNgaysinh() {
-        return ngaysinh;
-    }
-    public void setNgaysinh(Date ngaysinh) {
-        this.ngaysinh = ngaysinh;
-    }
-
-    // Getter và setter cho path
     public String getPath() {
         return path;
     }
+
     public void setPath(String path) {
         this.path = path;
     }
+
+    public String getChucvu() {
+        return chucvu;
+    }
+
+    public void setChucvu(String chucvu) {
+        this.chucvu = chucvu;
+    }
+
+    public String getSdt() {
+        return sdt;
+    }
+
+    public void setSdt(String sdt) {
+        this.sdt = sdt;
+    }
+
+    public long getCccd() {
+        return cccd;
+    }
+
+    public void setCccd(long cccd) {
+        this.cccd = cccd;
+    }
+
+    public Date getNgaysinh() {
+        return ngaysinh;
+    }
+
+    public void setNgaysinh(Date ngaysinh) {
+        this.ngaysinh = ngaysinh;
+    }
+    public model_ttnhanvien() {
+        
+    }   
 }

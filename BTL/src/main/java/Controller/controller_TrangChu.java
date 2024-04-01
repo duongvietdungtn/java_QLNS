@@ -6,7 +6,12 @@ package Controller;
 
 import Controller.controller_QLTaiKhoan;
 import Controller.controller_DangNhap;
+import View.BHXHView;
+import View.BPView;
+import View.ChucVuView;
 import View.view_TrangChu;
+import com.formdev.flatlaf.FlatLightLaf;
+import javax.swing.UIManager;
 
 /**
  *
@@ -36,6 +41,53 @@ public class controller_TrangChu {
     }
     public void openQLLuong() {
         controller_QLLuong a = new controller_QLLuong();
+        view.dispose();
+    }
+    public void openQLNhanVien() {
+        controller_ttnhanvien a = new controller_ttnhanvien();
+        view.dispose();
+    }
+    public void openQLHopDong() {
+        controller_qlhopdong a = new controller_qlhopdong();
+        view.dispose();
+    }
+    public void openQLBaoHiem() {
+        BHXHControl control1=new BHXHControl();
+        BHXHView view1 = new BHXHView(control1);
+        try {
+            UIManager.setLookAndFeel(new FlatLightLaf());
+        } catch (Exception ex) {
+            System.err.println("Failed to initialize LaF");
+        }
+        view1.setSize(1200, 800);
+        view1.setLocationRelativeTo(null);
+        view1.setVisible(true);
+        view.dispose();
+    }
+    public void openQLBoPhan() {
+        BPControl control1=new BPControl();
+        BPView view1 = new BPView(control1);
+        try {
+            UIManager.setLookAndFeel(new FlatLightLaf());
+        } catch (Exception ex) {
+            System.err.println("Failed to initialize LaF");
+        }
+        view1.setSize(800, 600);
+        view1.setLocationRelativeTo(null);
+        view1.setVisible(true);
+        view.dispose();
+    }
+    public void openQLChucVu() {
+        ChucVuControl control1=new ChucVuControl();
+        ChucVuView view1 = new ChucVuView(control1);
+        try {
+            UIManager.setLookAndFeel(new FlatLightLaf());
+        } catch (Exception ex) {
+            System.err.println("Failed to initialize LaF");
+        }
+        view1.setSize(800, 600);
+        view1.setLocationRelativeTo(null);
+        view1.setVisible(true);   
         view.dispose();
     }
 }

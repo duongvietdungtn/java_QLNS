@@ -10,13 +10,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseListener;
 import javax.swing.*;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
 
 public class view_qlhopdong extends JFrame {
     JTextField txt_mahd, txt_manv, txt_hoten, txt_timkiem;
@@ -80,18 +77,25 @@ public class view_qlhopdong extends JFrame {
         gbcTable.weighty = 1.0;
         panel_center2.add(scrollPane, gbcTable); // Sử dụng JScrollPane để có thể cuộn khi có nhiều dòng
         
+        ImageIcon icon_them =  new ImageIcon("C:\\Users\\hieup\\Downloads\\BTL\\src\\main\\java\\Image\\add.png");
+        ImageIcon icon_xoa =  new ImageIcon("C:\\Users\\hieup\\Downloads\\BTL\\src\\main\\java\\Image\\delete.png");
+        ImageIcon icon_luu =  new ImageIcon("C:\\Users\\hieup\\Downloads\\BTL\\src\\main\\java\\Image\\save.png");
+        ImageIcon icon_thoat =  new ImageIcon("C:\\Users\\hieup\\Downloads\\BTL\\src\\main\\java\\Image\\exit.png");
+        ImageIcon icon_sua =  new ImageIcon("C:\\Users\\hieup\\Downloads\\BTL\\src\\main\\java\\Image\\edit.png");
+        ImageIcon icon_excel =  new ImageIcon("C:\\Users\\hieup\\Downloads\\BTL\\src\\main\\java\\Image\\excel.png");
+        
         // Panel South
         panel_south = new JPanel();   
-        btn_luu = new JButton("Lưu");
-        btn_thoat = new JButton("Thoát");
+        btn_luu = new JButton("Lưu", icon_luu);
+        btn_thoat = new JButton("Thoát", icon_thoat);
         panel_south.add(btn_luu);
         panel_south.add(btn_thoat);        
 
         // Khởi tạo các JButton
-        btn_them = new JButton("Thêm");
-        btn_sua = new JButton("Sửa");
-        btn_xoa = new JButton("Xóa");
-        btn_xuatexc = new JButton("Xuất Excel");
+        btn_them = new JButton(" Thêm", icon_them);
+        btn_sua = new JButton("Sửa", icon_sua);
+        btn_xoa = new JButton("Xóa", icon_xoa);
+        btn_xuatexc = new JButton("Xuất Excel", icon_excel);
         
         
         // Thêm các thành phần của bạn vào panel_center1
@@ -209,20 +213,10 @@ public class view_qlhopdong extends JFrame {
             }
         });
         
-        txt_timkiem.getDocument().addDocumentListener(new DocumentListener() {
+        txt_timkiem.addActionListener(new ActionListener() {
             @Override
-            public void insertUpdate(DocumentEvent e) {
-                controller_qlhd.filter();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                controller_qlhd.filter();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                controller_qlhd.filter();
+            public void actionPerformed(ActionEvent e) {
+                controller_qlhd.timkiem();
             }
         });
         view_Screen();
@@ -264,6 +258,11 @@ public class view_qlhopdong extends JFrame {
     public JDateChooser get_ngaybatdau() {
         return ngaybatdau_dc;
     }
+    
+    public JTable getTable() {
+        return tb_hopdong;
+    }
+    
     public JDateChooser get_ngayketthuc() {
         return ngayketthuc_dc;
     }

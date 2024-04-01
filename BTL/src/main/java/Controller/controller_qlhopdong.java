@@ -4,6 +4,8 @@
  */
 package Controller;
 
+import Model.model_qlhopdong;
+import Model.model_ttnhanvien;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,6 +18,19 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import View.view_qlhopdong;
+import java.awt.Desktop;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import javax.swing.JTextField;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -28,6 +43,9 @@ public class controller_qlhopdong {
     public controller_qlhopdong() {
         view_qlhd = new view_qlhopdong(this);
         connection = KetNoi.getConnection(); // Lấy kết nối từ lớp KetNoi
+        chinhapchu_Hoten();
+        lockspace_Mahd();
+        lockspace_Manv();        
         view_qlhd.setVisible(true);
         loadDataToTable();
     }    
@@ -64,13 +82,83 @@ public class controller_qlhopdong {
     }
     
     public void XuatexcButtonClick(){
-        
+        try {
+            // Yêu cầu người dùng nhập tên cho file Excel
+            String fileName = JOptionPane.showInputDialog(null, "Nhập tên cho file Excel:", "Tên tệp Excel", JOptionPane.PLAIN_MESSAGE);
+            if (fileName == null || fileName.trim().isEmpty() || fileName.matches(".*[\\\\/:*?\"<>|].*")) {
+                JOptionPane.showMessageDialog(null, "Tên file không hợp lệ!");
+                return;
+            }
+
+            // Tạo workbook và sheet mới
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet sheet = workbook.createSheet("Thông tin hợp đồng");
+
+            // Tạo tiêu đề cho các cột và thiết lập border
+            XSSFRow headerRow = sheet.createRow(0);
+            String[] columns = {"Mã hợp đồng", "Mã nhân viên", "Họ và tên", "Ngày bắt đầu", "Ngày kết thúc"};
+            XSSFCellStyle headerStyle = workbook.createCellStyle();
+            headerStyle.setBorderBottom(BorderStyle.THIN);
+            headerStyle.setBorderTop(BorderStyle.THIN);
+            headerStyle.setBorderRight(BorderStyle.THIN);
+            headerStyle.setBorderLeft(BorderStyle.THIN);
+            for (int i = 0; i < columns.length; i++) {
+                XSSFCell cell = headerRow.createCell(i);
+                cell.setCellValue(columns[i]);
+                cell.setCellStyle(headerStyle);
+            }
+
+            // Lấy dữ liệu từ bảng hiện tại và điền vào sheet Excel
+            DefaultTableModel model = (DefaultTableModel) view_qlhd.tb_hopdong.getModel();
+            int rowCount = model.getRowCount();
+            for (int i = 0; i < rowCount; i++) {
+                XSSFRow row = sheet.createRow(i + 1);
+                for (int j = 0; j < columns.length; j++) {
+                    Object value = model.getValueAt(i, j);
+                    // Kiểm tra nếu giá trị là null trước khi gọi phương thức toString()
+                    String cellValue = (value != null) ? value.toString() : "";
+                    XSSFCell cell = row.createCell(j);
+                    cell.setCellValue(cellValue);
+
+                    // Thiết lập border cho ô
+                    XSSFCellStyle style = workbook.createCellStyle();
+                    style.setBorderBottom(BorderStyle.THIN);
+                    style.setBorderTop(BorderStyle.THIN);
+                    style.setBorderRight(BorderStyle.THIN);
+                    style.setBorderLeft(BorderStyle.THIN);
+                    cell.setCellStyle(style);
+                }
+            }
+
+            // Auto size cột sau khi đã điền dữ liệu
+            for (int i = 0; i < columns.length; i++) {
+                sheet.autoSizeColumn(i);
+            }
+
+            // Lưu workbook xuống file Excel với tên đã được chỉ định
+            String filePath = fileName + ".xlsx";
+            try (FileOutputStream outputStream = new FileOutputStream(filePath)) {
+                workbook.write(outputStream);
+            }
+
+            JOptionPane.showMessageDialog(null, "Xuất Excel thành công!");
+            Desktop.getDesktop().open(new File(filePath)); // Mở file Excel sau khi đã xuất thành công
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Xuất Excel thất bại: " + e.getMessage());
+        }
     }
     public void LuuButtonClick(){
         // Lấy nội dung của txt_mahd và txt_manv
-        String mahd = view_qlhd.get_txtmahd().getText();
-        String manv = view_qlhd.get_txtmanv().getText();
+        String mahd = view_qlhd.get_txtmahd().getText().toUpperCase();
+        String manv = view_qlhd.get_txtmanv().getText().toUpperCase();
         String hoten = view_qlhd.get_txthoten().getText();
+        // Chuyển đổi chữ cái đầu của họ và tên thành chữ hoa
+        StringBuilder sb = new StringBuilder();
+        for(String word : hoten.split("\\s+")) {
+            sb.append(word.substring(0, 1).toUpperCase()).append(word.substring(1).toLowerCase()).append(" ");
+        }
+        hoten = sb.toString().trim();
+    
         java.util.Date selectedDate1 = view_qlhd.get_ngaybatdau().getDate();
         java.sql.Date sqlngaybatdau = new java.sql.Date(selectedDate1.getTime());
         java.util.Date selectedDate2 = view_qlhd.get_ngayketthuc().getDate();
@@ -182,12 +270,47 @@ public class controller_qlhopdong {
         view_qlhd.dispose();
     }
     
-    public void filter() {
-            String query = view_qlhd.get_txttimkiem().getText().toLowerCase();
-            TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>((DefaultTableModel) view_qlhd.tb_hopdong.getModel());
-            view_qlhd.tb_hopdong.setRowSorter(sorter);
-            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + query));
-        }  
+    public void timkiem() {
+            try {
+                String searchText = view_qlhd.get_txttimkiem().getText();
+                String query = "SELECT mahopdong, manv, hoten, ngaybatdau, ngayketthuc FROM qlhopdong WHERE mahopdong LIKE ? OR manv LIKE ? OR hoten LIKE ? ";
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, "%" + searchText + "%");
+                preparedStatement.setString(2, "%" + searchText + "%");
+                preparedStatement.setString(3, "%" + searchText + "%");
+
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                ArrayList<model_qlhopdong> dataList = new ArrayList<>();
+
+            while (resultSet.next()) {
+                String mahd = resultSet.getString("mahopdong");
+                String manv = resultSet.getString("manv");
+                String hoten = resultSet.getString("hoten");
+                Date ngaybatdau = resultSet.getDate("ngaybatdau");
+                Date ngayketthuc = resultSet.getDate("ngayketthuc");
+
+                model_qlhopdong md_qlhd = new model_qlhopdong(mahd, manv, hoten, ngaybatdau, ngayketthuc);
+                dataList.add(md_qlhd);
+            }
+
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("Mã hợp đồng");          
+            model.addColumn("Mã nhân viên");
+            model.addColumn("Họ tên");
+            model.addColumn("Ngày bắt đầu");
+            model.addColumn("Ngày kết thúc");
+
+            for (model_qlhopdong md_qlhd : dataList) {
+                Object[] row = {md_qlhd.getMahd(), md_qlhd.getManv(), md_qlhd.getHoten(), md_qlhd.getNgaybatdau(), md_qlhd.getNgayketthuc()};
+                model.addRow(row);
+            }
+
+            view_qlhd.getTable().setModel(model);
+            } catch (SQLException ex) {
+                Logger.getLogger(controller_QLTaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }    
     
     public void ClickTable(){        
        view_qlhd.get_luu().setEnabled(false);
@@ -265,38 +388,86 @@ public class controller_qlhopdong {
         return new TrungResult(0, count_manv);
     }
     
+    public void chinhapchu_Hoten() {
+        JTextField txtHoten = view_qlhd.get_txthoten();
+        txtHoten.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char character = e.getKeyChar();
+                // Kiểm tra nếu ký tự không phải là số
+                if (Character.isLetter(character) || Character.isWhitespace(character) ||Character.isISOControl(character)) {
+                    txtHoten.setEditable(true);
+                }else{
+                    txtHoten.setEditable(false);
+                }
+            }
+        });
+    }
+    public void lockspace_Mahd() {
+        JTextField txtMahd = view_qlhd.get_txtmahd();
+        txtMahd.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char character = e.getKeyChar();
+                // Kiểm tra nếu ký tự không phải là số
+                if (Character.isLetter(character)|| Character.isDigit(character)|| Character.isISOControl(character)) {
+                    txtMahd.setEditable(true);
+                }else{
+                    txtMahd.setEditable(false);
+                }
+            }
+        });
+    }  
+    public void lockspace_Manv() {
+        JTextField txtManv = view_qlhd.get_txtmanv();
+        txtManv.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char character = e.getKeyChar();
+                // Kiểm tra nếu ký tự không phải là số
+                if (Character.isLetter(character)|| Character.isDigit(character)|| Character.isISOControl(character)) {
+                    txtManv.setEditable(true);
+                }else{
+                    txtManv.setEditable(false);
+                }
+            }
+        });
+    }  
+    
     public void loadDataToTable() {
         try {
             String query = "SELECT * FROM qlhopdong";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
-            
-            DefaultTableModel model = new DefaultTableModel(){
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                    return false; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
-                }      
-            };  
+
+            ArrayList<model_qlhopdong> dataList = new ArrayList<>();
+
+            while (resultSet.next()) {
+                String mahd = resultSet.getString("mahopdong");
+                String manv = resultSet.getString("manv");
+                String hoten = resultSet.getString("hoten");
+                Date ngaybatdau = resultSet.getDate("ngaybatdau");
+                Date ngayketthuc = resultSet.getDate("ngayketthuc");
+
+                model_qlhopdong md_qlhd = new model_qlhopdong(mahd, manv, hoten, ngaybatdau, ngayketthuc);
+                dataList.add(md_qlhd);
+            }
+
+            DefaultTableModel model = new DefaultTableModel();
             model.addColumn("Mã hợp đồng");          
             model.addColumn("Mã nhân viên");
             model.addColumn("Họ tên");
             model.addColumn("Ngày bắt đầu");
             model.addColumn("Ngày kết thúc");
 
-            // Đổ dữ liệu từ ResultSet vào model
-            while (resultSet.next()) {
-                Object[] row = new Object[5]; // Số cột trong kết quả truy vấn
-                for (int i = 1; i <= 5; i++) {
-                    row[i - 1] = resultSet.getObject(i);
-                }
+            for (model_qlhopdong md_qlhd : dataList) {
+                Object[] row = {md_qlhd.getMahd(), md_qlhd.getManv(), md_qlhd.getHoten(), md_qlhd.getNgaybatdau(), md_qlhd.getNgayketthuc()};
                 model.addRow(row);
             }
 
-            // Đặt model cho JTable
-            view_qlhd.tb_hopdong.setModel(model);
-            
+            view_qlhd.getTable().setModel(model);
         } catch (SQLException ex) {
-            Logger.getLogger(controller_ttnhanvien.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(controller_qlhopdong.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public static void main(String[] args) {
