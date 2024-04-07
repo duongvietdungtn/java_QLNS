@@ -77,7 +77,8 @@ public class BHXHControl {
         } finally {
             ConnectDB.closeConnection(conn);
         }
-    }   
+    }      
+    
     public boolean isDuplicate(String mabaohiem, String manv) {
     Connection conn = ConnectDB.getConnection();
     try {

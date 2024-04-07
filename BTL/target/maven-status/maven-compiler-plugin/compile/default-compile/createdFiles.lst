@@ -10,7 +10,6 @@ View\view_QLLuong$5.class
 View\view_QLNghiPhep$4.class
 View\view_TrangChu$9.class
 View\view_ttnhanvien$5.class
-Controller\controller_qlhopdong$TrungResult.class
 View\view_qlhopdong.class
 View\ChucVuView$2.class
 View\BPView.class
@@ -39,6 +38,7 @@ View\view_DangNhap.class
 View\view_TrangChu$7.class
 View\view_ttnhanvien$7.class
 Controller\controller_TrangChu.class
+View\BHXHView$5.class
 Model\NghiPhep.class
 View\view_QLNghiPhep$3.class
 View\view_ttnhanvien$1.class

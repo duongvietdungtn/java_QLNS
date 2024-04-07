@@ -38,7 +38,6 @@ public class view_qlhopdong extends JFrame {
     }
 
     public void display() {
-        Container con = getContentPane();
         JPanel pnmain = new JPanel();
         pnmain.setLayout(new BorderLayout());
 
@@ -77,12 +76,12 @@ public class view_qlhopdong extends JFrame {
         gbcTable.weighty = 1.0;
         panel_center2.add(scrollPane, gbcTable); // Sử dụng JScrollPane để có thể cuộn khi có nhiều dòng
         
-        ImageIcon icon_them =  new ImageIcon("C:\\Users\\hieup\\Downloads\\BTL\\src\\main\\java\\Image\\add.png");
-        ImageIcon icon_xoa =  new ImageIcon("C:\\Users\\hieup\\Downloads\\BTL\\src\\main\\java\\Image\\delete.png");
-        ImageIcon icon_luu =  new ImageIcon("C:\\Users\\hieup\\Downloads\\BTL\\src\\main\\java\\Image\\save.png");
-        ImageIcon icon_thoat =  new ImageIcon("C:\\Users\\hieup\\Downloads\\BTL\\src\\main\\java\\Image\\exit.png");
-        ImageIcon icon_sua =  new ImageIcon("C:\\Users\\hieup\\Downloads\\BTL\\src\\main\\java\\Image\\edit.png");
-        ImageIcon icon_excel =  new ImageIcon("C:\\Users\\hieup\\Downloads\\BTL\\src\\main\\java\\Image\\excel.png");
+        ImageIcon icon_them =  new ImageIcon("T:\\Code\\java_QLNS\\BTL\\src\\main\\java\\Image\\add.png");
+        ImageIcon icon_xoa =  new ImageIcon("T:\\Code\\java_QLNS\\BTL\\src\\main\\java\\Image\\delete.png");
+        ImageIcon icon_luu =  new ImageIcon("T:\\Code\\java_QLNS\\BTL\\src\\main\\java\\Image\\save.png");
+        ImageIcon icon_thoat =  new ImageIcon("T:\\Code\\java_QLNS\\BTL\\src\\main\\java\\Image\\exit.png");
+        ImageIcon icon_sua =  new ImageIcon("T:\\Code\\java_QLNS\\BTL\\src\\main\\java\\Image\\edit.png");
+        ImageIcon icon_excel =  new ImageIcon("T:\\Code\\java_QLNS\\BTL\\src\\main\\java\\Image\\excel.png");
         
         // Panel South
         panel_south = new JPanel();   
@@ -156,7 +155,7 @@ public class view_qlhopdong extends JFrame {
         pnmain.add(panel_north, BorderLayout.NORTH);
         pnmain.add(panel_center, BorderLayout.CENTER);
         pnmain.add(panel_south, BorderLayout.SOUTH);
-        con.add(pnmain);
+        add(pnmain);
         
         btn_them.addActionListener(new ActionListener() {
             @Override

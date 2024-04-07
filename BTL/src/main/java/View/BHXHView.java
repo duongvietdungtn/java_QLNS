@@ -6,6 +6,7 @@ package View;
 
 
 import Controller.BHXHControl;
+import Controller.controller_TrangChu;
 import Model.BHXH;
 import com.toedter.calendar.JDateChooser;
 import java.awt.BorderLayout;
@@ -34,7 +35,7 @@ public class BHXHView extends JFrame implements ActionListener{
     private JTextField txtmabh,txtmanv;
     private JComboBox txtloaibh;
     private JDateChooser dateBG,dateED;
-    private JButton AddJButton,UpdaJButton,DeleJButton,ExJButton;
+    private JButton AddJButton,UpdaJButton,DeleJButton,ExJButton,BackButton;
     private JTable table;
     private DefaultTableModel tableModel;
     private BHXHControl control;
@@ -85,11 +86,14 @@ public class BHXHView extends JFrame implements ActionListener{
         ImageIcon exceIcon = new ImageIcon("C:\\Users\\Admin\\Documents\\Zalo Received Files\\QuanLyNhanSu\\src\\main\\java\\image\\excel.png");
         ExJButton = new JButton("Xuất Excel",exceIcon);
         ExJButton.setPreferredSize(new Dimension(290, 20));
+        BackButton = new JButton("EXIT",exceIcon);
+        BackButton.setPreferredSize(new Dimension(290, 20));
         buttonPanel.add(ExJButton);
         inputButtonsPanel.add(AddJButton);    
         inputButtonsPanel.add(UpdaJButton);
         inputButtonsPanel.add(DeleJButton);
         inputButtonsPanel.add(ExJButton);
+        inputButtonsPanel.add(BackButton);
         // Tạo panel phía trên bao gồm các trường nhập liệu và các nút
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BorderLayout());
@@ -139,7 +143,16 @@ public class BHXHView extends JFrame implements ActionListener{
         UpdaJButton.addActionListener(this);
         DeleJButton.addActionListener(this);
         ExJButton.addActionListener(this);
+        BackButton.addActionListener(this);
         searchField.addActionListener(this);
+        
+        BackButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller_TrangChu a = new controller_TrangChu();
+                dispose();
+            }
+        });
         // Phương thức tìm kiếm:
         searchField.getDocument().addDocumentListener(new DocumentListener() {
         public void changedUpdate(DocumentEvent e) {
@@ -250,7 +263,9 @@ public class BHXHView extends JFrame implements ActionListener{
     if (e.getSource() == ExJButton) {
         control.xuLyXuatExcel();
     }
-}              
+}       
+
+    
     private void clearFields(){
         txtmabh.setText("");
         txtmanv.setText("");

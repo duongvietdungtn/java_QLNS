@@ -43,7 +43,6 @@ public class view_ttnhanvien extends JFrame {
     }
 
     public void display() {
-        Container con = getContentPane();
         JPanel pnmain = new JPanel();
         pnmain.setLayout(new BorderLayout());
 
@@ -82,11 +81,11 @@ public class view_ttnhanvien extends JFrame {
         gbcTable.weighty = 1.0;
         panel_center2.add(scrollPane, gbcTable); // Sử dụng JScrollPane để có thể cuộn khi có nhiều dòng
         
-        ImageIcon icon_luu =  new ImageIcon("C:\\Users\\hieup\\Downloads\\BTL\\src\\main\\java\\Image\\save.png");
-        ImageIcon icon_thoat =  new ImageIcon("C:\\Users\\hieup\\Downloads\\BTL\\src\\main\\java\\Image\\exit.png");
-        ImageIcon icon_sua =  new ImageIcon("C:\\Users\\hieup\\Downloads\\BTL\\src\\main\\java\\Image\\edit.png");
-        ImageIcon icon_excel =  new ImageIcon("C:\\Users\\hieup\\Downloads\\BTL\\src\\main\\java\\Image\\excel.png");
-        ImageIcon icon_browse =  new ImageIcon("C:\\Users\\hieup\\Downloads\\BTL\\src\\main\\java\\Image\\browse.png");
+        ImageIcon icon_luu =  new ImageIcon("T:\\Code\\java_QLNS\\BTL\\src\\main\\java\\Image\\save.png");
+        ImageIcon icon_thoat =  new ImageIcon("T:\\Code\\java_QLNS\\BTL\\src\\main\\java\\Image\\exit.png");
+        ImageIcon icon_sua =  new ImageIcon("T:\\Code\\java_QLNS\\BTL\\src\\main\\java\\Image\\edit.png");
+        ImageIcon icon_excel =  new ImageIcon("T:\\Code\\java_QLNS\\BTL\\src\\main\\java\\Image\\excel.png");
+        ImageIcon icon_browse =  new ImageIcon("T:\\Code\\java_QLNS\\BTL\\src\\main\\java\\Image\\browse.png");
         
         // Panel South
         panel_south = new JPanel();
@@ -131,7 +130,7 @@ public class view_ttnhanvien extends JFrame {
         panel_center3.add(new JLabel("Giới tính"), gbc);
         gbc.gridx = 1;
         gbc.gridy = 1;
-        panel_center3.add(cbb_giotinh = new JComboBox<>(new String[]{"Nam", "Nữ"}), gbc);
+        panel_center3.add(cbb_giotinh = new JComboBox<>(new String[]{"NAM", "NỮ"}), gbc);
         gbc.gridx = 2;
         gbc.gridy = 1;
         panel_center3.add(new JLabel("Ngày sinh"), gbc);
@@ -197,7 +196,6 @@ public class view_ttnhanvien extends JFrame {
         panel_center3.add(btn_upload, gbc);
         
         btn_sua.setEnabled(false);
-//        btn_xoa.setEnabled(false);
         btn_luu.setEnabled(false);
         setLock();
         
@@ -205,7 +203,7 @@ public class view_ttnhanvien extends JFrame {
         pnmain.add(panel_north, BorderLayout.NORTH);
         pnmain.add(panel_center, BorderLayout.CENTER);
         pnmain.add(panel_south, BorderLayout.SOUTH);
-        con.add(pnmain);
+        add(pnmain);
         
         btn_sua.addActionListener(new ActionListener() {
             @Override
@@ -221,13 +219,6 @@ public class view_ttnhanvien extends JFrame {
                 btn_upload.setEnabled(true);           
             }
         });
-        
-//        btn_xoa.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                controller_ttnv.XoaButtonClick();
-//            }
-//        });
         
         btn_xuatexc.addActionListener(new ActionListener() {
             @Override
@@ -271,9 +262,6 @@ public class view_ttnhanvien extends JFrame {
                 controller_ttnv.timkiem();
             }
         });
-//        btn_thoat.setIcon(new ImageIcon("T:\\Code\\java_QLNS\\BTL\\src\\main\\java\\back.png"));
-//        btn_sua.setIcon(new ImageIcon("T:\\Code\\java_QLNS\\BTL\\src\\main\\java\\edit.png"));
-//        btn_xuatexc.setIcon(new ImageIcon("T:\\Code\\java_QLNS\\BTL\\src\\main\\java\\excel.png"));
         view_Screen();
     }
     public void setLock(){

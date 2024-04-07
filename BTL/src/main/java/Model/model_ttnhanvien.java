@@ -11,10 +11,10 @@ import java.util.Date;
  */
 public class model_ttnhanvien {
     private String manv, hoten, diachi, mahd, bophan, mabaohiem, gioitinh, path, chucvu, sdt;
-    private long cccd;
+    private String cccd;
     private Date ngaysinh;
 
-    public model_ttnhanvien(String manv, String hoten, String diachi, String mahd, String bophan, String mabaohiem, String gioitinh, String path, String chucvu, String sdt, long cccd, Date ngaysinh) {
+    public model_ttnhanvien(String manv, String hoten, String diachi, String mahd, String bophan, String mabaohiem, String gioitinh, String path, String chucvu, String sdt, String cccd, Date ngaysinh) {
         this.manv = manv;
         this.hoten = hoten;
         this.diachi = diachi;
@@ -109,11 +109,11 @@ public class model_ttnhanvien {
         this.sdt = sdt;
     }
 
-    public long getCccd() {
+    public String getCccd() {
         return cccd;
     }
 
-    public void setCccd(long cccd) {
+    public void setCccd(String cccd) {
         this.cccd = cccd;
     }
 
